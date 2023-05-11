@@ -1,0 +1,31 @@
+.blogcard{
+	display: flex;
+	border: 1px solid;
+	border-radius: 7px;
+	border-color: gray;
+	height: 8em;
+}
+.blogcard:hover{
+	border-color: var(--link-state-color);
+}
+
+.blogcard-content{
+	max-width: 70%;
+}
+
+.blogcard-title{
+	color: var(--font-color);
+	text-decoration: underline;
+	font-size: 1.0em;
+}
+
+.blogcard-description{
+	color: var(--font-color);
+	font-size: 0.8em;
+}
+
+.blogcard-thumbnail{
+	width: 30%;
+	height: 80%;
+}
+

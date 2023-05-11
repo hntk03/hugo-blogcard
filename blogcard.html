@@ -1,0 +1,59 @@
+{{ $title := "failed to get title." }}
+{{ $description := "failed to get description." }}
+{{ $thumbnail := "/image/failedToGetImagePath.png" }}
+{{ $url := (.Get 0) }}
+
+<!-- URL先の情報を取得 -->
+{{- with $page := resources.GetRemote $url -}}
+	{{- with $page.Err -}}
+	{{- else -}}
+		{{- with $head := index (findRE "<head>(.|\n)*?</head>" $page.Content) 0 -}}
+		<!-- タイトルを取得 -->
+		{{ $linktitle := (findRE "<title>(.|\n)*?</title>" $head) }}
+		{{- if $linktitle -}}
+		<!-- タイトルを整形 -->
+		{{ $linktitle = index $linktitle 0 }}
+		{{ $linktitle = replace $linktitle "<title>" "" }}
+			{{ $linktitle = replace $linktitle "</title>" "" }}
+		{{ $title = $linktitle }}
+		{{- end -}}
+
+
+		{{- with $metas := findRE "<meta.*?>" $head -}}
+				{{ range $meta := $metas }}
+				<!-- 説明文を取得 -->
+				{{- with $includedescription := findRE `<.*?name="description".*?>` $meta -}}
+					{{ $linkdescription := index $includedescription 0 }}
+					{{- with $match := replaceRE "<.*?content=\"(.*?)\".*>" "$1" $linkdescription -}}
+					{{ $description = $match }}
+					{{- end -}}
+				{{- end -}}
+				<!-- サムネイルを取得 -->
+				{{- with $includeimage := findRE `<.*?property="og:image".*?>` $meta -}}
+					{{ $linkimage := index $includeimage 0 }}
+					{{- with $match := replaceRE "<.*?content=\"(.*?)\".*>" "$1" $linkimage -}}
+						{{ $thumbnail = $match }}
+					{{- end -}}
+				{{- end -}}
+				{{- end -}}
+			{{- end -}}
+
+		{{- end -}}
+	{{- end -}}
+{{- end -}}
+
+<a href={{ $url }} target="blank">
+	<article class="blogcard">
+		<div class="blogcard-content">
+			<p class="blogcard-title">
+			{{ $title }}
+			</p>
+			<p class="blogcard-description">
+			{{ $description | truncate 120 }}
+			</p>
+		</div>
+		<figure class="blogcard-thumbnail">
+			<img src={{ $thumbnail }} />
+		</figure>
+	</article>
+</a>
