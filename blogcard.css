@@ -4,6 +4,7 @@
 	border-radius: 7px;
 	border-color: gray;
 	height: 8em;
+	overflow: hidden;
 }
 .blogcard:hover{
 	border-color: var(--link-state-color);
@@ -24,7 +25,6 @@
 .blogcard-description{
 	color: var(--font-color);
 	font-size: 0.8em;
-	word-break: break-all;
 }
 
 .blogcard-thumbnail{
