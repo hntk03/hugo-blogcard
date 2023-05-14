@@ -1,6 +1,6 @@
 {{ $title := "failed to get title." }}
 {{ $description := "failed to get description." }}
-{{ $thumbnail := "/image/failedToGetImagePath.png" }}
+{{ $thumbnail := "/image/failedToGetImagePath.webp" }}
 {{ $url := (.Get 0) }}
 
 <!-- URL先の情報を取得 -->
@@ -46,14 +46,14 @@
 	<article class="blogcard">
 		<div class="blogcard-content">
 			<p class="blogcard-title">
-			{{ $title }}
+			{{ $title | truncate 80 }}
 			</p>
 			<p class="blogcard-description">
 			{{ $description | truncate 120 }}
 			</p>
 		</div>
 		<figure class="blogcard-thumbnail">
-			<img src={{ $thumbnail }} />
+			<img class="blogcard-image" src={{ $thumbnail }} />
 		</figure>
 	</article>
 </a>

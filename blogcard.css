@@ -10,22 +10,30 @@
 }
 
 .blogcard-content{
+	width: 70%;
 	max-width: 70%;
+	overflow: hidden;
 }
 
 .blogcard-title{
 	color: var(--font-color);
-	text-decoration: underline;
+	font-weight: bold;
 	font-size: 1.0em;
 }
 
 .blogcard-description{
 	color: var(--font-color);
 	font-size: 0.8em;
+	word-break: break-all;
 }
 
 .blogcard-thumbnail{
 	width: 30%;
-	height: 80%;
+	max-width: 30%;
+	overflow: hidden;
+}
+
+.blogcard-image{
+	transform: scale(1.0);
 }
 
